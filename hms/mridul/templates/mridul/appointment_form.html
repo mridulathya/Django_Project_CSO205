@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/appointment_form.css' %}">
+    <title>Book an Appointment</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Book an Appointment</h1>
+        <form action="{% url 'book_appointment' user_id %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="doctor">Select Doctor</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">--Select a Doctor--</option>
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor.doctor_id }}">
+                            {{doctor.specialization}} : {{ doctor.first_name }} {{ doctor.last_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+<!--             
+            {% if selected_doctor %}
+            <div class="doctor-info">
+                <h3>Doctor Information</h3>
+                <p>Name: {{ selected_doctor.first_name }} {{ selected_doctor.last_name }}</p>
+                <p>Specialization: {{ selected_doctor.specialization }}</p>
+            </div>
+            {% endif %} -->
+        
+            <div class="form-group">
+                <label for="appointment_date">Appointment Date</label>
+                <input type="date" id="appointment_date" name="appointment_date" value="{{ default_date }}" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="appointment_time">Appointment Time</label>
+                <input type="time" id="appointment_time" name="appointment_time" value="{{ default_time }}" required>
+            </div>
+        
+            <div class="form-group">
+                <label for="reason">Reason for Appointment</label>
+                <textarea id="reason" name="reason" rows="4" placeholder="Please describe the reason for your appointment (optional)"></textarea>
+            </div>
+        
+            <button type="submit" class="btn">Book Appointment</button>
+        </form>
+        
+    </div>
+</body>
+</html>

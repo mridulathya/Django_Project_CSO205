@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="{% static 'css/main._desktop.css' %}">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="contact-info">
+            <span><i class="fas fa-envelope"></i> info@gmail.com</span>
+            <span><i class="fas fa-map-marker-alt"></i> C-706, Noida Sector 37</span>
+        </div>
+        <div class="call-now">
+            <span>Call Now: 2147483647</span>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        
+        <div class="logo">
+            <div>
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+            </div>
+            <div>HMS</div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="{% url 'adminpage' %}">Admin</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'aboutus' %}">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Most Trusted Health Partner</h1>
+            <p>TOTAL HEALTH CARE SOLUTION</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="service-box">
+            <i class="fas fa-hospital"></i>
+            <h3>24 Hours Service</h3>
+            <p>Online Appointment</p>
+            <button class="appointment-btn">Make an Appointment</button>
+        </div>
+        <div class="service-box">
+            <i class="fas fa-clock"></i>
+            <h3>Timing Schedule</h3>
+            <p>Working Hours</p>
+            <ul>
+                <li>Sun - Wed: 8:00 - 17:00</li>
+                <li>Thu - Fri: 9:00 - 17:00</li>
+                <li>Sat - Sun: 10:00 - 17:00</li>
+            </ul>
+        </div>
+        <div class="service-box">
+            <i class="fas fa-phone"></i>
+            <h3>Emergency Cases</h3>
+            <p>1-800-700-6200</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3>Hospital Management System</h3>
+                <p>The Hospital Management System (HMS) is designed for Any Hospital to replace their existing manual, paper-based system...</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Link</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Admin</a></li>
+                    <li><a href="#">Doctor Signup</a></li>
+                    <li><a href="#">Patient Signup</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Get in Touch</h4>
+                <p>info@gmail.com</p>
+                <p>2147483647</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

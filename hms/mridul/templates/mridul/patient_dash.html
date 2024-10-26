@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/patient_dash.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alldoctor.css' %}">
+</head>
+<body>
+        <aside class="sidebar">
+            <div class="profile">
+                <!-- <img src="user-placeholder.png" alt="Profile Image" class="profile-img"> -->
+                <h2>{{user.first_name}} {{user.last_name}}</h2>
+                <p>{{user.email_id}}</p>
+                <button class="logout-btn">Log out</button>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'alldoctor' user.user_sr_no %}">All Doctors</a></li>
+                    <li><a href="{% url 'all_bookings' user.user_sr_no %}">My Bookings</a></li>
+                    <li><a href="{% url 'patient_prescriptions' user.user_sr_no %}">Prescriptions</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Welcome! <br> <span>{{user.first_name}} {{user.last_name}}</span></h1>
+                <p>Haven't any idea about doctors? no problem let's jump to "All Doctors" section or "Sessions"</p>
+                
+                <div>
+                    {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <form action="{% url 'patient_dashboard' user.user_sr_no %}" method="post">
+                        {% csrf_token %}
+                        {{ form.specialisation.label_tag }}
+                        {{ form.specialisation }}
+                        <button type="submit">Search</button> 
+                    </form>
+                </div>
+                
+                {% if results %}
+                    <div class="results">
+                        <h2>Search Results:</h2>
+                        <div class="doctor-grid"> 
+                            {% for dataset in results %}
+                            <div class="doctor-card">
+                                <!-- <img src="doctor-placeholder.png" alt="Doctor Image" class="doctor-img"> -->
+                                <h2>{{ dataset.first_name }} {{ dataset.last_name }}</h2>
+                                <p class="rating">{{ dataset.rating }} &#9733;</p> <!-- Display doctor rating -->
+                                <p>{{ dataset.specialisation }}</p> <!-- Display specialisation if available -->
+                                <form action="{% url 'book_appointment' user.user_sr_no %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type= 'submit' class="btn" >Book Appointment</button>
+                                </form>
+                            </div>
+                            {% empty %}
+                            <div class="no-results">
+                                <p>No results found.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div>
+                        <h3>No results found</h3>
+                    </div>
+            {% endif %}
+
+            <div class="upcoming-booking">
+                <h2>Your Upcoming Booking</h2>
+                <!-- <h1>Appointments for User</h1> -->
+                {% if all_appointments %}
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Doctor Name</th>
+                                <th>Appointment Date</th>
+                                <th>Appointment Time</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in all_appointments %}
+                                <tr>
+                                    <td>{{ appointment.appointment_id }}</td>
+                                    <td>{{ appointment.doctor_id.first_name }} {{ appointment.doctor_id.last_name }}</td> <!-- Assuming doctor has a name field -->
+                                    <td>{{ appointment.appointment_date }}</td>
+                                    <td>{{ appointment.appointment_time }}</td>
+                                    <td>{{ appointment.reason }}</td>
+                                    <td>{{ appointment.status }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No appointments found for this user.</p>
+                {% endif %}
+            </div>
+        </main>
+</body>
+</html>

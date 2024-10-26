@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - {{user.first_name}} {{user.last_name}}</title>
+    <link rel="stylesheet" href="{% static 'css/add_patient.css' %}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="profile">
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+            <p>{{user.email_id}}</p>
+            <button class="logout-btn">Log out</button>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'receptionist_dashboard' user.user_sr_no %}">Back to Dashboard</a></li>
+                <li class="app_head">Appointments</li>
+                <ul class="sub_appointments">
+                    <li><a href="{% url 'show_appointments' user.user_sr_no 'Waiting to be Scheduled' %}" class="button">Pending</a></li>
+                    <li><a href="{% url 'show_appointments' user.user_sr_no 'Scheduled' %}" class="button" >Scheduled</a></li>
+                    <li><a href="{% url 'show_appointments' user.user_sr_no 'Cancelled' %}" class="button" >Cancelled</a></li>
+                    <li><a href="{% url 'show_appointments' user.user_sr_no 'Completed' %}" class="button" >Completed</a></li>
+                </ul>
+                <li><a href="{% url 'alldoctor' user.user_sr_no %}">All Doctors</a></li>
+                <li><a href = "{% url 'add_patient' user.user_sr_no %}">Add Patient</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="main-content">
+            <h1> receptionist_dashboard </h1>
+    </main>
+</body>
+</html>
